@@ -250,56 +250,112 @@ export const ConceptPage = () => {
                   </div>
 
                   {expanded && conceptResult.evaluation.differentiation_score && (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2">
-                      <div className="space-y-2">
-                        <div className="flex justify-between text-xs font-semibold text-slate-700">
-                          <span>Farmer Value (35% Weight)</span>
-                          <span>{conceptResult.evaluation.differentiation_score.farmer_value || 8.0}/10</span>
+                    <div className="space-y-6 pt-2">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div className="space-y-2">
+                          <div className="flex justify-between text-xs font-semibold text-slate-700">
+                            <span>Farmer Value (35% Weight)</span>
+                            <span>{conceptResult.evaluation.differentiation_score.farmer_value || 8.0}/10</span>
+                          </div>
+                          <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                            <div
+                              className="bg-indigo-600 h-full rounded-full"
+                              style={{ width: `${(conceptResult.evaluation.differentiation_score.farmer_value || 8) * 10}%` }}
+                            />
+                          </div>
+                          {conceptResult.evaluation.differentiation_score.factor_rationales?.farmer_value && (
+                            <p className="text-[11px] text-slate-500 italic">
+                              {conceptResult.evaluation.differentiation_score.factor_rationales.farmer_value}
+                            </p>
+                          )}
                         </div>
-                        <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
-                          <div
-                            className="bg-indigo-600 h-full rounded-full"
-                            style={{ width: `${(conceptResult.evaluation.differentiation_score.farmer_value || 8) * 10}%` }}
-                          />
+
+                        <div className="space-y-2">
+                          <div className="flex justify-between text-xs font-semibold text-slate-700">
+                            <span>Commercial Viability (30% Weight)</span>
+                            <span>{conceptResult.evaluation.differentiation_score.commercial_viability || 7.5}/10</span>
+                          </div>
+                          <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                            <div
+                              className="bg-purple-600 h-full rounded-full"
+                              style={{ width: `${(conceptResult.evaluation.differentiation_score.commercial_viability || 7.5) * 10}%` }}
+                            />
+                          </div>
+                          {conceptResult.evaluation.differentiation_score.factor_rationales?.commercial_viability && (
+                            <p className="text-[11px] text-slate-500 italic">
+                              {conceptResult.evaluation.differentiation_score.factor_rationales.commercial_viability}
+                            </p>
+                          )}
+                        </div>
+
+                        <div className="space-y-2">
+                          <div className="flex justify-between text-xs font-semibold text-slate-700">
+                            <span>Technical Feasibility (20% Weight)</span>
+                            <span>{conceptResult.evaluation.differentiation_score.feasibility || 8.0}/10</span>
+                          </div>
+                          <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                            <div
+                              className="bg-emerald-600 h-full rounded-full"
+                              style={{ width: `${(conceptResult.evaluation.differentiation_score.feasibility || 8) * 10}%` }}
+                            />
+                          </div>
+                          {conceptResult.evaluation.differentiation_score.factor_rationales?.feasibility && (
+                            <p className="text-[11px] text-slate-500 italic">
+                              {conceptResult.evaluation.differentiation_score.factor_rationales.feasibility}
+                            </p>
+                          )}
+                        </div>
+
+                        <div className="space-y-2">
+                          <div className="flex justify-between text-xs font-semibold text-slate-700">
+                            <span>Strategic Fit (15% Weight)</span>
+                            <span>{conceptResult.evaluation.differentiation_score.strategic_fit || 7.0}/10</span>
+                          </div>
+                          <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                            <div
+                              className="bg-amber-500 h-full rounded-full"
+                              style={{ width: `${(conceptResult.evaluation.differentiation_score.strategic_fit || 7) * 10}%` }}
+                            />
+                          </div>
+                          {conceptResult.evaluation.differentiation_score.factor_rationales?.strategic_fit && (
+                            <p className="text-[11px] text-slate-500 italic">
+                              {conceptResult.evaluation.differentiation_score.factor_rationales.strategic_fit}
+                            </p>
+                          )}
                         </div>
                       </div>
 
-                      <div className="space-y-2">
-                        <div className="flex justify-between text-xs font-semibold text-slate-700">
-                          <span>Commercial Viability (30% Weight)</span>
-                          <span>{conceptResult.evaluation.differentiation_score.commercial_viability || 7.5}/10</span>
-                        </div>
-                        <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
-                          <div
-                            className="bg-purple-600 h-full rounded-full"
-                            style={{ width: `${(conceptResult.evaluation.differentiation_score.commercial_viability || 7.5) * 10}%` }}
-                          />
-                        </div>
-                      </div>
+                      {/* Kill Filter & Duplicate Assessment Summary */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-slate-100 text-xs">
+                        {conceptResult.evaluation.kill_filter_result && (
+                          <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-200/80 space-y-2">
+                            <span className="font-bold text-slate-900 uppercase tracking-wider block">Kill Filter Verification</span>
+                            <div className="grid grid-cols-2 gap-1.5 text-slate-700">
+                              <div>High Pain: <strong>{conceptResult.evaluation.kill_filter_result.addressed_high_pain ? '✓ Yes' : '✗ No'}</strong></div>
+                              <div>Scalable: <strong>{conceptResult.evaluation.kill_filter_result.scalable ? '✓ Yes' : '✗ No'}</strong></div>
+                              <div>Unique: <strong>{conceptResult.evaluation.kill_filter_result.truly_unique ? '✓ Yes' : '✗ No'}</strong></div>
+                              <div>Simple Exec: <strong>{conceptResult.evaluation.kill_filter_result.simple_execution ? '✓ Yes' : '✗ No'}</strong></div>
+                            </div>
+                            {conceptResult.evaluation.kill_filter_result.kill_reason && (
+                              <p className="text-rose-600 font-medium pt-1">
+                                Triggered Kill: {conceptResult.evaluation.kill_filter_result.kill_reason}
+                              </p>
+                            )}
+                          </div>
+                        )}
 
-                      <div className="space-y-2">
-                        <div className="flex justify-between text-xs font-semibold text-slate-700">
-                          <span>Technical Feasibility (20% Weight)</span>
-                          <span>{conceptResult.evaluation.differentiation_score.feasibility || 8.0}/10</span>
-                        </div>
-                        <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
-                          <div
-                            className="bg-emerald-600 h-full rounded-full"
-                            style={{ width: `${(conceptResult.evaluation.differentiation_score.feasibility || 8) * 10}%` }}
-                          />
-                        </div>
-                      </div>
-
-                      <div className="space-y-2">
-                        <div className="flex justify-between text-xs font-semibold text-slate-700">
-                          <span>Strategic Fit (15% Weight)</span>
-                          <span>{conceptResult.evaluation.differentiation_score.strategic_fit || 7.0}/10</span>
-                        </div>
-                        <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
-                          <div
-                            className="bg-amber-500 h-full rounded-full"
-                            style={{ width: `${(conceptResult.evaluation.differentiation_score.strategic_fit || 7) * 10}%` }}
-                          />
+                        <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-200/80 space-y-2">
+                          <span className="font-bold text-slate-900 uppercase tracking-wider block">Offer Bank Baseline Comparison</span>
+                          <p className="text-slate-700">
+                            Duplicate Similarity Score: <strong>{(conceptResult.evaluation.duplicate_score * 100).toFixed(0)}%</strong>
+                          </p>
+                          {Array.isArray(conceptResult.evaluation.top_duplicates) && conceptResult.evaluation.top_duplicates.length > 0 ? (
+                            <p className="text-slate-600">
+                              Overlap with existing offers: <strong>{conceptResult.evaluation.top_duplicates.join(', ')}</strong>
+                            </p>
+                          ) : (
+                            <p className="text-emerald-700 font-medium">✓ Genuine Whitespace — low overlap with existing commercial offers.</p>
+                          )}
                         </div>
                       </div>
                     </div>

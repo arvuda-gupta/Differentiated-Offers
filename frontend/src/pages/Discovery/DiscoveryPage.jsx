@@ -337,6 +337,42 @@ export const DiscoveryPage = () => {
               </Card>
             </div>
 
+            {/* Solution Options Section */}
+            {Array.isArray(discoveryResult.discovery.solution_options) && discoveryResult.discovery.solution_options.length > 0 && (
+              <Card className="border-indigo-100 space-y-4 shadow-2xs">
+                <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                  <h3 className="font-bold text-slate-900 text-sm uppercase tracking-wider flex items-center gap-2">
+                    <Lightbulb className="w-4 h-4 text-amber-500" />
+                    <span>Explored Solution Options & Potential Directions</span>
+                  </h3>
+                  <Badge variant="indigo" size="sm">{discoveryResult.discovery.solution_options.length} Direction(s) Generated</Badge>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {discoveryResult.discovery.solution_options.map((opt, idx) => (
+                    <div key={opt.id || idx} className="bg-slate-50 p-4 rounded-xl border border-slate-200/80 space-y-2 flex flex-col justify-between">
+                      <div className="space-y-1.5">
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs font-bold text-indigo-700 uppercase tracking-wider">Option {String.fromCharCode(65 + idx)}</span>
+                          <Badge variant="slate" size="sm">{opt.archetype_code || 'Product Plus'}</Badge>
+                        </div>
+                        <h4 className="text-sm font-bold text-slate-900 leading-snug">{opt.title}</h4>
+                        <p className="text-xs text-slate-600 leading-relaxed">{opt.description}</p>
+                      </div>
+                      {Array.isArray(opt.component_codes) && opt.component_codes.length > 0 && (
+                        <div className="flex flex-wrap gap-1 pt-2 border-t border-slate-200/60">
+                          {opt.component_codes.map((c, cIdx) => (
+                            <span key={cIdx} className="text-[10px] font-semibold text-slate-600 bg-white border border-slate-200 px-1.5 py-0.5 rounded">
+                              {c}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </Card>
+            )}
+
             {/* Key Research Findings Section */}
             {renderKeyFindings(discoveryResult.discovery.key_findings)}
 
